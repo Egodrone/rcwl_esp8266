@@ -16,20 +16,67 @@ using namespace std;
 
 
 
+AESLib aesLib;
 WiFiClient client;
 const char* ssid     = "SSID";
-const char* password = "passwd";
+const char* password = "Passwd";
 const char * host    = "192.168.0.171";
 const int httpPort   = 8467;
 const char* url      = "url";
 
 // AES Encryption Key
-byte aes_key[] = { 0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x30 };
+byte aes_key[] = { 0x2f,0x30,0x30,0x30,0x31,0x30,0x30,0x31,0x30,0x30,0x30,0x30,0x30,0x30,0x30,0x31 };
 // IV
 byte aes_iv[16] = { 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0 };
 
 String messageToEncrypt = "Information";
 
+
+
+// Generate IV
+void aes_init() {
+    aesLib.gen_iv(aes_iv);
+    aesLib.set_paddingmode((paddingMode)0);
+}
+
+
+
+
+void display_iv() {
+   byte null_iv[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+   char iv[256];
+   int ivLen = base64_encode(iv, (char*)null_iv, 16);
+   Serial.println(iv);
+   Serial.println(ivLen);
+}
+
+
+
+String encode(String data) {
+    char input[256] = {0};
+    char output[256] = {0};
+    
+    return data;
+}
+
+
+
+String decode(String data) {
+    
+    return data;
+}
+
+
+
+String encrypt(char * msg, byte iv[]) {
+    //int msgLen = strlen(msg);
+    //String encrypted[2 * msgLen];
+      
+    //aesLib.encrypt64(msg, msgLen, encrypted, aes_key, sizeof(aes_key), iv);
+    
+    //return String(encrypted);
+    return msg;
+}
 
 
 
@@ -85,4 +132,8 @@ void loop()
     }
 
     Serial.println(analogRead(RCWL_PIN));
+    
+    display_iv();
+    //byte enc_iv[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    //String encrypted = encrypt("some info", enc_iv);
 }
